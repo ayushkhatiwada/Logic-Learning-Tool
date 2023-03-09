@@ -1,3 +1,5 @@
+import random
+
 def generate_question(level):
     conn_str = [" ∨ ", " ∧ ", " → ", " ↔ "]
 
@@ -51,4 +53,12 @@ def generate_question(level):
     print(prop_val_dict)
     print(question_elements)
     print(elements_answers)
+    
     return prop_val_dict, question_elements, elements_answers
+
+
+def test_generate_question():
+    generate_question(1)
+
+
+test_generate_question()
