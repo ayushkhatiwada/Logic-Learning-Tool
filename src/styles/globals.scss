@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@font-face {
+  font-family: "Computer Modern";
+  src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunss.otf');
+}
+@font-face {
+  font-family: "Computer Modern";
+  src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunsx.otf');
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Computer Modern";
+  src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunsi.otf');
+  font-style: italic, oblique;
+}
+@font-face {
+  font-family: "Computer Modern";
+  src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunbxo.otf');
+  font-weight: bold;
+  font-style: italic, oblique;
+}
+
 @import './colours.scss';
 
 html,
@@ -11,7 +33,14 @@ h6,
 p {
   padding: 0;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  
+  font-family: 'Major Mono Display', monospace;
+  color: $secondar-colour;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), -1px -1px 30px #B4FFFF, 3px 3px 50px rgba(255, 255, 255, 0.5);
+}
+
+body {
+  background: $primary-colour;
 }
 
 a {

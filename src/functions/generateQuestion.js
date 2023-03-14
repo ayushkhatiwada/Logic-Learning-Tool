@@ -56,11 +56,7 @@ const generateQuestion = (level) => {
     elementsAnswers.push(V[i]);
   }
 
-  console.log(propValDict);
-  console.log(questionElements);
-  console.log(elementsAnswers);
-
   return [propValDict, questionElements, elementsAnswers];
 }
 
-export default generateQuestion;
+export default generateQuestion

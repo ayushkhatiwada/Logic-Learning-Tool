@@ -1,11 +1,13 @@
-import './styles/App.scss';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Game from './pages/Game';
 
-function App() {
+export default function App() {
   return (
-    <div>
-      Hello World
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Game />} />
+        <Route path="*" element={<h1>404 Page not found</h1>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
