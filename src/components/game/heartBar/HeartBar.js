@@ -8,7 +8,6 @@ export default function HeartBar({ hearts, maxHearts }) {
     <div className={styles.heartBar}>
       {Array.from(Array(maxHearts)).map((_, i) => (
         <div className={styles.heart}>
-          {console.log(i, hearts)}
           <img src={i < hearts ? heartImg : emptyHeartImg} />
         </div>
       ))}

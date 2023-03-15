@@ -48,9 +48,18 @@ export default function Game() {
   }
 
   useEffect(() => {
-    // console.log(questionData[0])
-    // console.log(questionData[1][questionData[1].length - 1])
-    // console.log(questionData)
+    // event listener to update the timer every 10ms
+    const timerInterval = setInterval(() => {
+      setTimeLeft((timeLeft) => {
+        console.log("Interval running")
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval)
+          console.log("Time is up")
+          return 0;
+        }
+        return timeLeft - 0.01;
+      })
+    }, 10)
   }, [])
 
   return (
