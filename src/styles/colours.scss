@@ -3,7 +3,10 @@ $secondar-colour: #F5F5F5;
 
 $green: #B4FFC0;
 $light-blue: #B4FFFF;
+$gray: #FFFFFF57;
+$light-gray: #FFFFFF1A;
 
 @mixin mathsFont {
   font-family: "Computer Modern", monospace;
+  // font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }

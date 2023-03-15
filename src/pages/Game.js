@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import AnswerInput from '../components/game/answerInput/AnswerInput'
 import Timer from '../components/shared/timer/Timer'
 import generateQuestion from '../functions/generateQuestion'
 import styles from '../styles/Game.module.scss'
@@ -16,17 +17,26 @@ export default function Game() {
   //   console.log(data)
   // }
 
-  const getStatement = () => {
-    return questionData[1][questionData[1].length - 1]
-  }
-
   const getVariables = () => {
     return questionData[0]
   }
 
+  const getFullStatement = () => {
+    return questionData[1][questionData[1].length - 1]
+  }
+
+  const getStatements = () => {
+    return questionData[1]
+  }
+
+  const getAnswers = () => {
+    return questionData[2]
+  }
+
   useEffect(() => {
-    console.log(questionData[0])
-    console.log(questionData[1][questionData[1].length - 1])
+    // console.log(questionData[0])
+    // console.log(questionData[1][questionData[1].length - 1])
+    console.log(questionData)
   }, [])
 
   return (
@@ -47,7 +57,7 @@ export default function Game() {
         </div>
 
         <div className={styles.question}>
-          <p className={styles.statement}>{getStatement()}</p>
+          <p className={styles.statement}>{getFullStatement()}</p>
           <div className={styles.variables}>
             {
               Object.entries(getVariables()).map(([variable, value]) => (
@@ -55,6 +65,20 @@ export default function Game() {
               ))
             }
           </div>
+
+          <div className={styles.answers}>
+            {
+              getStatements().map((statement, i) => (
+                <div className={styles.answerContainer}>
+                  <AnswerInput statement={statement} correctAnswer={+(getAnswers()[i] == true)} />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div className={styles.heartBar}>
+
         </div>
       </div>
     </>

@@ -1,0 +1,24 @@
+@import '../../../styles/colours.scss';
+
+.statement {
+  @include mathsFont;
+
+  font-size: min(1.5vw, 2rem);
+}
+
+.inputField {
+  margin-top: 1rem;
+
+  width: 5rem;
+  height: 5rem;
+
+  line-height: 5rem;
+  text-align: center;
+  font-size: min(2.5vw, 2rem);
+  color: $secondar-colour;
+
+  background: $gray;
+  border: 3px solid $light-blue;
+  border-radius: 12px;
+}
+
