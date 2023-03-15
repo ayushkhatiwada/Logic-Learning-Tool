@@ -1,0 +1,18 @@
+@import '../../../styles/colours.scss';
+
+.timer {
+  border: 1px solid white;
+
+  width: min(50vw, 500px);
+  height: 15px;
+  
+  background: $light-gray;
+  border-radius: 30px;
+  box-shadow: 0px 4px 50px #FFFFFF;
+
+  .timeLeftBar {
+    height: 100%;
+    background: white;
+    border-radius: 30px;
+  }
+}

@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react'
-import AnswerInput from '../components/game/answerInput/AnswerInput'
 import Timer from '../components/shared/timer/Timer'
+import AnswerInput from '../components/game/answerInput/AnswerInput'
+import HeartBar from '../components/game/heartBar/HeartBar'
 import generateQuestion from '../functions/generateQuestion'
 import styles from '../styles/Game.module.scss'
 
 export default function Game() {
-  const [level, setLevel] = useState(3)
-  const [score, setScore] = useState(1036)
+  const maxQuestions = 5
+  const maxHearts = 5
+  
+  const [level, setLevel] = useState(1)
+  const [timeLeft, setTimeLeft] = useState(10)
   const [currentQuestion, setCurrentQuestion] = useState(1)
-  const [maxQuestions, setMaxQuestions] = useState(5)
+  const [score, setScore] = useState(0)
+  const [hearts, setHearts] = useState(5)
   const [questionData, setQuestionData] = useState(generateQuestion(level))
 
   // const getLevelData = async () => {
@@ -33,10 +38,19 @@ export default function Game() {
     return questionData[2]
   }
 
+  const resetGame = () => {
+    setLevel(1)
+    setTimeLeft(10)
+    setCurrentQuestion(1)
+    setScore(0)
+    setHearts(5)
+    setQuestionData(generateQuestion(level))
+  }
+
   useEffect(() => {
     // console.log(questionData[0])
     // console.log(questionData[1][questionData[1].length - 1])
-    console.log(questionData)
+    // console.log(questionData)
   }, [])
 
   return (
@@ -45,7 +59,7 @@ export default function Game() {
         <div className={styles.gameHeader}>
           <div className={styles.levelTimerQuestion}>
             <div className={styles.level}>Level {level}</div>
-            <div className={styles.timerContainer}><Timer /></div>
+            <div className={styles.timerContainer}><Timer timeLeft={timeLeft} maxTime={level * 10} /></div>
             <div className={styles.questionNum}>
               Question <p className={styles.currentQuestion}>{currentQuestion}</p>/{maxQuestions}
             </div>
@@ -78,7 +92,7 @@ export default function Game() {
         </div>
 
         <div className={styles.heartBar}>
-
+          <HeartBar hearts={hearts} maxHearts={maxHearts} />
         </div>
       </div>
     </>
