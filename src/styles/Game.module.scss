@@ -8,6 +8,7 @@
 }
 
 .gameHeader {
+  @include alienFont;
   // margin: 3.125rem 2.5rem 0;
   margin: 3.125rem 0 0;
   
@@ -38,10 +39,12 @@
 
 .score {
   .scoreText {
+    @include alienFont;
     font-size: 1.5rem;
   }
 
   .scoreValue {
+    @include alienFont;
     font-size: 1.8rem;
   }
 }

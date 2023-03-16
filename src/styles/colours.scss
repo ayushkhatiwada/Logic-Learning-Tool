@@ -1,12 +1,17 @@
 $primary-colour: #081323;
-$secondar-colour: #F5F5F5;
+$secondary-colour: #F5F5F5;
 
 $green: #B4FFC0;
 $light-blue: #B4FFFF;
+$dark-gray: #181313;
 $gray: #FFFFFF57;
 $light-gray: #929292;
 
 @mixin mathsFont {
   font-family: "Computer Modern", monospace;
   // font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+@mixin alienFont {
+  font-family: 'Major Mono Display', monospace;
 }
