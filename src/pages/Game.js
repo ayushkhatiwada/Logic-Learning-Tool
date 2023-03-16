@@ -1,26 +1,32 @@
-import { useState, useEffect } from 'react'
-import Timer from '../components/shared/timer/Timer'
-import AnswerInput from '../components/game/answerInput/AnswerInput'
-import HeartBar from '../components/game/heartBar/HeartBar'
-import generateQuestion from '../functions/generateQuestion'
-import styles from '../styles/Game.module.scss'
+import { useState, useEffect } from "react"
+import Timer from "../components/shared/timer/Timer"
+import AnswerInput from "../components/game/answerInput/AnswerInput"
+import HeartBar from "../components/game/heartBar/HeartBar"
+import generateQuestion from "../functions/generateQuestion"
+import styles from "../styles/Game.module.scss"
 
 export default function Game() {
   const maxQuestions = 5
   const maxHearts = 5
-  
+
   const [level, setLevel] = useState(1)
   const [timeLeft, setTimeLeft] = useState(10)
   const [currentQuestion, setCurrentQuestion] = useState(1)
   const [score, setScore] = useState(0)
   const [hearts, setHearts] = useState(5)
-  const [questionData, setQuestionData] = useState(generateQuestion(level))
 
-  // const getLevelData = async () => {
-  //   const data = await generateQuestion(level)
-  //   setQuestionData(data)
-  //   console.log(data)
-  // }
+  const [questionData, setQuestionData] = useState(generateQuestion(level))
+  const [answers, setAnswers] = useState(new Array(level).fill("")) // "" - not answered, otherwise value of the input field
+  const setAnswerAtIndex = (answer, index) => { 
+    console.log("setAnswerAtIndex: ", answer, index)
+    
+    setAnswers((answers) => {
+      answers[index] = answer
+      return answers
+    })
+
+    console.log(answers)
+  }
 
   const getVariables = () => {
     return questionData[0]
@@ -38,26 +44,99 @@ export default function Game() {
     return questionData[2]
   }
 
+  const timeForLevel = (level) => {
+    return level * 10
+  }
+
+  const handleAnswerChange = (answer, answerIndex) => {
+    setAnswerAtIndex(answer, answerIndex)
+  }
+
+  useEffect(() => {
+    console.log("answers: ", answers)
+  }, [answers])
+  
+    
+    // if (answer == "") {
+      
+    // } else if (answer == correctAnswer) {
+      
+    // } else {
+    //   return false
+    // }
+
+    // if (correctAnswer == null) {
+    //   setAnswers((answers) => {
+    //     answers[answerIndex] = null
+    //     return answers
+    //   })
+    // } else if (correctAnswer == true) {
+    //   setAnswers((answers) => {
+    //     answers[answerIndex] = true
+
+    //     console.log("answers: ", answers)
+    //     if (answers.every((answer) => answer == true)) {
+    //       console.log("Every answer correct")
+    //       nextQuestion()
+    //     } else {
+    //       return answers
+    //     }
+    //   })
+    // } else {
+    //   setAnswers((answers) => {
+    //     answers[answerIndex] = false
+    //     return answers
+    //   })
+
+    //   if (hearts == 1) {
+    //     resetGame()
+    //   } else {
+    //     setHearts((hearts) => hearts - 1)
+    //   }
+    // }
+  // }
+
+  // useEffect(() => {  
+  //   if (answers.every((answer) => answer == true)) {
+  //     console.log("Every answer correct")
+  //     nextQuestion()
+  //   }
+  // }, [answers])
+
   const resetGame = () => {
     setLevel(1)
     setTimeLeft(10)
     setCurrentQuestion(1)
     setScore(0)
     setHearts(5)
-    setQuestionData(generateQuestion(level))
+    setQuestionData(generateQuestion(1))
+    setAnswers(new Array(1).fill(null)) 
+  }
+
+  const nextQuestion = () => {
+    if (currentQuestion < maxQuestions) {
+      setCurrentQuestion((currentQuestion) => currentQuestion + 1)
+      setQuestionData(generateQuestion(level))
+      setAnswers(new Array(level).fill(null))
+      setTimeLeft(timeForLevel(level))
+    } else {
+      setTimeLeft(timeForLevel(level + 1))
+      setCurrentQuestion(1)
+      setQuestionData(generateQuestion(level + 1))
+      setAnswers(new Array(level + 1).fill(null))
+      setLevel((level) => level + 1)
+    }
   }
 
   useEffect(() => {
     // event listener to update the timer every 10ms
     const timerInterval = setInterval(() => {
       setTimeLeft((timeLeft) => {
-        console.log("Interval running")
         if (timeLeft <= 0) {
           clearInterval(timerInterval)
-          console.log("Time is up")
-          return 0;
+          return 0
         }
-        return timeLeft - 0.01;
+        return timeLeft - 0.01
       })
     }, 10)
   }, [])
@@ -68,9 +147,13 @@ export default function Game() {
         <div className={styles.gameHeader}>
           <div className={styles.levelTimerQuestion}>
             <div className={styles.level}>Level {level}</div>
-            <div className={styles.timerContainer}><Timer timeLeft={timeLeft} maxTime={level * 10} /></div>
+            <div className={styles.timerContainer}>
+              <Timer timeLeft={timeLeft} maxTime={timeForLevel(level)} />
+            </div>
             <div className={styles.questionNum}>
-              Question <p className={styles.currentQuestion}>{currentQuestion}</p>/{maxQuestions}
+              Question{" "}
+              <p className={styles.currentQuestion}>{currentQuestion}</p>/
+              {maxQuestions}
             </div>
           </div>
           <div className={styles.score}>
@@ -82,22 +165,26 @@ export default function Game() {
         <div className={styles.question}>
           <p className={styles.statement}>{getFullStatement()}</p>
           <div className={styles.variables}>
-            {
-              Object.entries(getVariables()).map(([variable, value]) => (
-                <p>{variable} = {value}</p>
-              ))
-            }
+            {Object.entries(getVariables()).map(([variable, value]) => (
+              <p>
+                {variable} = {value}
+              </p>
+            ))}
           </div>
 
-          <div className={styles.answers}>
-            {
-              getStatements().map((statement, i) => (
-                <div className={styles.answerContainer}>
-                  <AnswerInput statement={statement} correctAnswer={+(getAnswers()[i] == true)} />
-                </div>
-              ))
-            }
-          </div>
+          <form className={styles.answers}>
+            {getStatements().map((statement, i) => (
+              <div className={styles.answerContainer}>
+                <AnswerInput
+                  statement={statement}
+                  // correctAnswer={+(getAnswers()[i] == true)}
+                  answer = {answers[i]}
+                  handleAnswerChange={handleAnswerChange}
+                  answerIndex={i}
+                />
+              </div>
+            ))}
+          </form>
         </div>
 
         <div className={styles.heartBar}>
