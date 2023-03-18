@@ -24,6 +24,11 @@ export default function Game() {
     })  
   }
 
+  const updateScore = () => {
+    // increase score based on time left and level
+    setScore((score) => Math.round(score + timeLeft * level * 10))
+  }
+
   const getVariables = () => {
     return questionData[0]
   }
@@ -107,6 +112,7 @@ export default function Game() {
     }
 
     if (correctAnswer) {
+      updateScore()
       nextQuestion()
     } else {
       if (hearts == 1) {
