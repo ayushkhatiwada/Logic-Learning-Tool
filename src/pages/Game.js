@@ -95,14 +95,18 @@ export default function Game() {
   // }, [answers])
 
   const submitAnswers = () => {
-    console.log(answers)
-    
     const correctAnswers = getAnswers()
-    const correctAnswer = correctAnswers.every((answer, index) => {
-      return answer == answers[index]
-    })
+    // console.log(answers, correctAnswers)
+    
+    let correctAnswer = true
+    for (let i = 0; i < correctAnswers.length; i++) {
+      if (!(correctAnswers[i] == answers[i])) {
+        correctAnswer = false
+        break
+      }
+    }
 
-    if (correctAnswer == true) {
+    if (correctAnswer) {
       nextQuestion()
     } else {
       if (hearts == 1) {
