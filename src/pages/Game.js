@@ -18,14 +18,10 @@ export default function Game() {
   const [questionData, setQuestionData] = useState(generateQuestion(level))
   const [answers, setAnswers] = useState(new Array(level).fill("")) // "" - not answered, otherwise value of the input field
   const setAnswerAtIndex = (answer, index) => { 
-    console.log("setAnswerAtIndex: ", answer, index)
-    
     setAnswers((answers) => {
       answers[index] = answer
       return answers
-    })
-
-    console.log(answers)
+    })  
   }
 
   const getVariables = () => {
@@ -51,12 +47,7 @@ export default function Game() {
   const handleAnswerChange = (answer, answerIndex) => {
     setAnswerAtIndex(answer, answerIndex)
   }
-
-  useEffect(() => {
-    console.log("answers: ", answers)
-  }, [answers])
   
-    
     // if (answer == "") {
       
     // } else if (answer == correctAnswer) {
@@ -103,6 +94,26 @@ export default function Game() {
   //   }
   // }, [answers])
 
+  const submitAnswers = () => {
+    console.log(answers)
+    
+    const correctAnswers = getAnswers()
+    const correctAnswer = correctAnswers.every((answer, index) => {
+      return answer == answers[index]
+    })
+
+    if (correctAnswer == true) {
+      nextQuestion()
+    } else {
+      if (hearts == 1) {
+        resetGame()
+      } else {
+        setHearts((hearts) => hearts - 1)
+        nextQuestion()
+      }
+    }
+  }
+
   const resetGame = () => {
     setLevel(1)
     setTimeLeft(10)
@@ -110,25 +121,25 @@ export default function Game() {
     setScore(0)
     setHearts(5)
     setQuestionData(generateQuestion(1))
-    setAnswers(new Array(1).fill(null)) 
+    setAnswers(new Array(1).fill("")) 
   }
 
   const nextQuestion = () => {
     if (currentQuestion < maxQuestions) {
       setCurrentQuestion((currentQuestion) => currentQuestion + 1)
       setQuestionData(generateQuestion(level))
-      setAnswers(new Array(level).fill(null))
+      setAnswers(new Array(level).fill(""))
       setTimeLeft(timeForLevel(level))
     } else {
       setTimeLeft(timeForLevel(level + 1))
       setCurrentQuestion(1)
       setQuestionData(generateQuestion(level + 1))
-      setAnswers(new Array(level + 1).fill(null))
+      setAnswers(new Array(level + 1).fill(""))
       setLevel((level) => level + 1)
     }
   }
 
-  useEffect(() => {
+  useEffect(() => {    
     // event listener to update the timer every 10ms
     const timerInterval = setInterval(() => {
       setTimeLeft((timeLeft) => {
@@ -140,6 +151,10 @@ export default function Game() {
       })
     }, 10)
   }, [])
+
+  // useEffect(() => {
+  //   console.log("answers changed")
+  // }, [answers])
 
   return (
     <>
@@ -172,18 +187,21 @@ export default function Game() {
             ))}
           </div>
 
-          <form className={styles.answers}>
-            {getStatements().map((statement, i) => (
-              <div className={styles.answerContainer}>
-                <AnswerInput
-                  statement={statement}
-                  // correctAnswer={+(getAnswers()[i] == true)}
-                  answer = {answers[i]}
-                  handleAnswerChange={handleAnswerChange}
-                  answerIndex={i}
-                />
-              </div>
-            ))}
+          <form className={styles.answers} onSubmit={(e) => {e.preventDefault(); submitAnswers()}}>
+            <div className={styles.answersContainer}>
+              {getStatements().map((statement, i) => (
+                <div className={styles.answerContainer}>
+                  <AnswerInput
+                    statement={statement}
+                    // correctAnswer={+(getAnswers()[i] == true)}
+                    answer = {answers[i]}
+                    handleAnswerChange={handleAnswerChange}
+                    answerIndex={i}
+                  />
+                </div>
+              ))}
+            </div>
+            <input className={styles.submitButton} type="submit" value="Submit Answers" />
           </form>
         </div>
 

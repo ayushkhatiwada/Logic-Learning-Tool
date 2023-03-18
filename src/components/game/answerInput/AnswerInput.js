@@ -7,21 +7,13 @@ export default function AnswerInput({
   handleAnswerChange,
   answerIndex,
 }) {
-  // const checkAnswer = (answer) => {
-  //   if (answer == "") {
-  //     return null
-  //   } else if (answer == correctAnswer) {
-  //     return true
-  //   } else {
-  //     return false
-  //   }
-  // }
 
   return (
     <>
       <p className={styles.statement}>{statement}</p>
       <input
         className={styles.inputField}
+        placeholder="?"
         value={answer}
         onChange={(e) => {
           handleAnswerChange(e.target.value, answerIndex)
