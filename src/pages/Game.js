@@ -6,6 +6,8 @@ import generateQuestion from "../functions/generateQuestion"
 import backgroundStrokes from "../img/background-strokes.svg"
 import styles from "../styles/Game.module.scss"
 import timer from "../components/shared/timer/Timer"
+import gohome from "../img/homesymbol.png"
+import { Link } from 'react-router-dom'
 
 export default function Game() {
   const maxLevels = 5
@@ -237,6 +239,9 @@ export default function Game() {
           <HeartBar hearts={hearts} maxHearts={maxHearts} />
         </div>
       </div>
+      <Link to="/" style={{position: "absolute", top : 60, left: 140 }}>
+          <img src={gohome} style={{width: "50px"}}/>
+        </Link>
     </>
   )
 }
