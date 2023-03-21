@@ -4,7 +4,7 @@
   width: 90vw;
   margin: auto;
   
-  padding: 100px 0;
+  padding-top: 50px;
 
   display: flex;
   flex-direction: column;
@@ -21,8 +21,8 @@
 
     margin-bottom: 50px;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
+    // &:last-child {
+    //   margin-bottom: 0;
+    // }
   }
 }

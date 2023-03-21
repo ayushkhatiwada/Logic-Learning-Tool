@@ -53,58 +53,19 @@ export default function Game() {
     setAnswerAtIndex(answer, answerIndex)
   }
   
-    // if (answer == "") {
-      
-    // } else if (answer == correctAnswer) {
-      
-    // } else {
-    //   return false
-    // }
-
-    // if (correctAnswer == null) {
-    //   setAnswers((answers) => {
-    //     answers[answerIndex] = null
-    //     return answers
-    //   })
-    // } else if (correctAnswer == true) {
-    //   setAnswers((answers) => {
-    //     answers[answerIndex] = true
-
-    //     console.log("answers: ", answers)
-    //     if (answers.every((answer) => answer == true)) {
-    //       console.log("Every answer correct")
-    //       nextQuestion()
-    //     } else {
-    //       return answers
-    //     }
-    //   })
-    // } else {
-    //   setAnswers((answers) => {
-    //     answers[answerIndex] = false
-    //     return answers
-    //   })
-
-    //   if (hearts == 1) {
-    //     resetGame()
-    //   } else {
-    //     setHearts((hearts) => hearts - 1)
-    //   }
-    // }
-  // }
-
-  // useEffect(() => {  
-  //   if (answers.every((answer) => answer == true)) {
-  //     console.log("Every answer correct")
-  //     nextQuestion()
-  //   }
-  // }, [answers])
-
   const submitAnswers = () => {
+    // check if any answer is empty
+    if (answers.includes("")) {
+      alert("Please fill in all the answers")
+      return
+    }
+    
     const correctAnswers = getAnswers()
     // console.log(answers, correctAnswers)
     
     let correctAnswer = true
     for (let i = 0; i < correctAnswers.length; i++) {
+        
       if (!(correctAnswers[i] == answers[i])) {
         correctAnswer = false
         break

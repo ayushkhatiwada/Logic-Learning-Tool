@@ -14,6 +14,8 @@ export default function AnswerInput({
       <input
         className={styles.inputField}
         placeholder="?"
+        pattern="[01]"
+        maxLength={1}
         value={answer}
         onChange={(e) => {
           handleAnswerChange(e.target.value, answerIndex)
