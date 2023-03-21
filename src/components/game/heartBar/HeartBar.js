@@ -1,7 +1,7 @@
-import React from "react";
-import heartImg from "../../../img/heart.svg";
-import emptyHeartImg from "../../../img/empty-heart.svg";
-import styles from "./HeartBar.module.scss";
+import React from "react"
+import heartImg from "../../../img/heart.svg"
+import emptyHeartImg from "../../../img/empty-heart.svg"
+import styles from "./HeartBar.module.scss"
 
 export default function HeartBar({ hearts, maxHearts }) {
   return (
@@ -12,5 +12,5 @@ export default function HeartBar({ hearts, maxHearts }) {
         </div>
       ))}
     </div>
-  );
+  )
 }

@@ -5,29 +5,38 @@ import HeartBar from "../components/game/heartBar/HeartBar"
 import generateQuestion from "../functions/generateQuestion"
 import backgroundStrokes from "../img/background-strokes.svg"
 import styles from "../styles/Game.module.scss"
+import timer from "../components/shared/timer/Timer"
 
 export default function Game() {
+  const maxLevels = 5
   const maxQuestions = 5
   const maxHearts = 5
-
+  let timerInterval
+  
+  const [timerPaused, setTimerPaused] = useState(false)
   const [level, setLevel] = useState(1)
   const [timeLeft, setTimeLeft] = useState(10)
   const [currentQuestion, setCurrentQuestion] = useState(1)
   const [score, setScore] = useState(0)
   const [hearts, setHearts] = useState(5)
 
+  const [wrongAnswerScreen, setWrongAnswerScreen] = useState(false)
+
   const [questionData, setQuestionData] = useState(generateQuestion(level))
   const [answers, setAnswers] = useState(new Array(level).fill("")) // "" - not answered, otherwise value of the input field
   const setAnswerAtIndex = (answer, index) => { 
-    setAnswers((answers) => {
-      answers[index] = answer
-      return answers
+    setAnswers((prevAnswers) => {
+      const newAnswers = [...prevAnswers]
+      newAnswers[index] = answer
+      return newAnswers
     })  
   }
 
   const updateScore = () => {
     // increase score based on time left and level
-    setScore((score) => Math.round(score + timeLeft * level * 10))
+    if (timeLeft > 0) {
+      setScore((score) => Math.round(score + timeLeft * level * 10))
+    }
   }
 
   const getVariables = () => {
@@ -55,6 +64,8 @@ export default function Game() {
   }
   
   const submitAnswers = () => {
+    // return nextQuestion()
+
     // check if any answer is empty
     if (answers.includes("")) {
       alert("Please fill in all the answers")
@@ -77,56 +88,89 @@ export default function Game() {
       updateScore()
       nextQuestion()
     } else {
-      if (hearts == 1) {
+      setHearts((hearts) => hearts - 1)
+      setTimerPaused(true)
+      setWrongAnswerScreen(true)
+      
+      if (hearts == 0) {
+        // game over
+        alert("Game over!\nFinal score: " + score + "\nPress OK to restart the game.")
         resetGame()
-      } else {
-        setHearts((hearts) => hearts - 1)
-        nextQuestion()
       }
     }
   }
 
   const resetGame = () => {
+    setWrongAnswerScreen(false)
     setLevel(1)
     setTimeLeft(10)
+    setTimerPaused(false)
     setCurrentQuestion(1)
     setScore(0)
     setHearts(5)
     setQuestionData(generateQuestion(1))
-    setAnswers(new Array(1).fill("")) 
+    setAnswers(new Array(1).fill(""))
   }
 
   const nextQuestion = () => {
+    setWrongAnswerScreen(false)
+    setTimerPaused(false)
     if (currentQuestion < maxQuestions) {
+      // next question in the same level
       setCurrentQuestion((currentQuestion) => currentQuestion + 1)
       setQuestionData(generateQuestion(level))
       setAnswers(new Array(level).fill(""))
       setTimeLeft(timeForLevel(level))
     } else {
-      setTimeLeft(timeForLevel(level + 1))
-      setCurrentQuestion(1)
-      setQuestionData(generateQuestion(level + 1))
-      setAnswers(new Array(level + 1).fill(""))
-      setLevel((level) => level + 1)
+      if ((level) == maxLevels) {
+        // game won
+        alert("You have completed the game!\nFinal score: " + score + "\n")
+        resetGame()
+      } else {
+        // next level
+        setTimeLeft(timeForLevel(level + 1))
+        setCurrentQuestion(1)
+        setQuestionData(generateQuestion(level + 1))
+        setAnswers(new Array(level + 1).fill(""))
+        setLevel((level) => level + 1)
+      }
     }
   }
 
-  useEffect(() => {    
-    // event listener to update the timer every 10ms
-    const timerInterval = setInterval(() => {
+  const startTimer = () => {
+    timerInterval = setInterval(() => {
       setTimeLeft((timeLeft) => {
         if (timeLeft <= 0) {
-          clearInterval(timerInterval)
           return 0
         }
         return timeLeft - 0.01
       })
     }, 10)
-  }, [])
+  }
 
-  // useEffect(() => {
-  //   console.log("answers changed")
-  // }, [answers])
+  const stopTimer = () => {
+    clearInterval(timerInterval)
+  }
+
+  useEffect(() => {    
+    if (!timerPaused) {
+      startTimer()
+    } else {
+      stopTimer()
+    }
+
+    return () => clearInterval(timerInterval)
+  }, [timerPaused])
+
+  useEffect(() => {
+    if (hearts == 0) {
+      // game over
+      setTimeout(() => {
+        alert("Game over!\nFinal score: " + score + "\nPress OK to restart the game.")
+        resetGame()
+      }, 100)
+    }
+  }, [hearts])
 
   return (
     <>
@@ -159,21 +203,33 @@ export default function Game() {
             ))}
           </div>
 
-          <form className={styles.answers} onSubmit={(e) => {e.preventDefault(); submitAnswers()}}>
+          {/* <button onClick={() => setTimerPaused((timerPaused) => !timerPaused)}>false</button> */}
+          <form
+            className={styles.answers}
+            onSubmit={(e) => {
+              e.preventDefault()
+              wrongAnswerScreen ? nextQuestion() : submitAnswers()
+            }}
+          >
             <div className={styles.answersContainer}>
               {getStatements().map((statement, i) => (
                 <div className={styles.answerContainer}>
                   <AnswerInput
                     statement={statement}
-                    // correctAnswer={+(getAnswers()[i] == true)}
                     answer = {answers[i]}
+                    correctAnswer={+(getAnswers()[i] == true)}
                     handleAnswerChange={handleAnswerChange}
                     answerIndex={i}
+                    wrongAnswerScreen={wrongAnswerScreen}
                   />
                 </div>
               ))}
             </div>
-            <input className={styles.submitButton} type="submit" value="Submit Answers" />
+            <input
+              className={styles.submitButton}
+              type="submit"
+              value={wrongAnswerScreen ? "Next Question" : "Submit Answers"}
+            />
           </form>
         </div>
 
