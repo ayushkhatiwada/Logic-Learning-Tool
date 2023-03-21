@@ -1,19 +1,5 @@
-<svg width="91" height="77" viewBox="0 0 91 77" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_4_10)">
-<path d="M42.6864 29.5749C42.6342 37.3015 36.8418 43.5274 29.7488 43.4808C22.6558 43.4342 16.9481 37.1328 17.0004 29.4062C17.0526 21.6796 22.845 15.4537 29.938 15.5003C37.031 15.5468 42.7387 21.8483 42.6864 29.5749Z" fill="#D691B2"/>
-<path d="M60.9996 29.6951C60.9474 37.4217 55.155 43.6476 48.062 43.601C40.969 43.5545 35.2613 37.253 35.3136 29.5264C35.3658 21.7998 41.1582 15.5739 48.2512 15.6205C55.3442 15.6671 61.0519 21.9685 60.9996 29.6951Z" fill="#D691B2"/>
-<path d="M38.6854 58.5L20.6878 39.4733L56.9386 39.7114L38.6854 58.5Z" fill="#D691B2"/>
-</g>
-<defs>
-<filter id="filter0_d_4_10" x="-13" y="-10.5" width="104" height="103" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="15"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.839216 0 0 0 0 0.521569 0 0 0 0 0.67451 0 0 0 1 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4_10"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4_10" result="shape"/>
-</filter>
-</defs>
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M25.6864 14.5749C25.6342 22.3015 19.8418 28.5274 12.7488 28.4808C5.65581 28.4342 -0.051876 22.1328 0.000355641 14.4062C0.0525873 6.67957 5.84495 0.45368 12.938 0.50026C20.031 0.546839 25.7387 6.84825 25.6864 14.5749Z" fill="#D691B2"/>
+<path d="M43.9996 14.6951C43.9474 22.4217 38.155 28.6476 31.062 28.601C23.969 28.5545 18.2613 22.253 18.3136 14.5264C18.3658 6.79983 24.1582 0.573941 31.2512 0.62052C38.3442 0.6671 44.0519 6.96851 43.9996 14.6951Z" fill="#D691B2"/>
+<path d="M21.6854 43.5L3.68781 24.4733L39.9386 24.7114L21.6854 43.5Z" fill="#D691B2"/>
 </svg>
