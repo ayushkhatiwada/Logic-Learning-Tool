@@ -3,6 +3,7 @@ import Timer from "../components/shared/timer/Timer"
 import AnswerInput from "../components/game/answerInput/AnswerInput"
 import HeartBar from "../components/game/heartBar/HeartBar"
 import generateQuestion from "../functions/generateQuestion"
+import backgroundStrokes from "../img/background-strokes.svg"
 import styles from "../styles/Game.module.scss"
 
 export default function Game() {
@@ -129,7 +130,7 @@ export default function Game() {
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container} style={{ backgroundImage: `url(${backgroundStrokes})` }}>
         <div className={styles.gameHeader}>
           <div className={styles.levelTimerQuestion}>
             <div className={styles.level}>Level {level}</div>
