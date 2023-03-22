@@ -41,6 +41,7 @@ export default function Game() {
     }
   }
 
+
   const getVariables = () => {
     return questionData[0]
   }
@@ -60,6 +61,7 @@ export default function Game() {
   const timeForLevel = (level) => {
     return level * 10
   }
+
 
   const handleAnswerChange = (answer, answerIndex) => {
     setAnswerAtIndex(answer, answerIndex)
@@ -94,11 +96,13 @@ export default function Game() {
       setTimerPaused(true)
       setWrongAnswerScreen(true)
       
-      if (hearts == 0) {
-        // game over
-        alert("Game over!\nFinal score: " + score + "\nPress OK to restart the game.")
-        resetGame()
-      }
+      // if (hearts == 0) {
+      //   // game over
+      //   console.log("updateScoreHistory(score, false)")
+      //   updateScoreHistory(score, false)
+      //   alert("Game over!\nFinal score: " + score + "\nPress OK to restart the game.")
+      //   resetGame()
+      // }
     }
   }
 
@@ -126,6 +130,7 @@ export default function Game() {
     } else {
       if ((level) == maxLevels) {
         // game won
+        updateScoreHistory(score, true)
         alert("You have completed the game!\nFinal score: " + score + "\n")
         resetGame()
       } else {
@@ -154,6 +159,13 @@ export default function Game() {
     clearInterval(timerInterval)
   }
 
+  const updateScoreHistory = (score, gameWon) => {
+    console.log(score, gameWon)
+    const scoreHistory = JSON.parse(localStorage.getItem("scoreHistory")) || []
+    scoreHistory.push({ timestamp: new Date().getTime(), score, gameWon })
+    localStorage.setItem("scoreHistory", JSON.stringify(scoreHistory))
+  }
+
   useEffect(() => {    
     if (!timerPaused) {
       startTimer()
@@ -168,6 +180,7 @@ export default function Game() {
     if (hearts == 0) {
       // game over
       setTimeout(() => {
+        updateScoreHistory(score, false)
         alert("Game over!\nFinal score: " + score + "\nPress OK to restart the game.")
         resetGame()
       }, 100)

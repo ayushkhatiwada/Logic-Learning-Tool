@@ -14,9 +14,8 @@ export default function Home() {
         <img className={styles.gameLogo} src={gameLogoImg}></img>
         <div className={styles.buttons}>
           <Link to="/game"><div className={styles.button}>Start Game</div></Link>
-          {/* <Link to="/settings"><div className={styles.button}>Settings</div></Link> */}
+          <Link to="/history"><div className={styles.button}>Score History</div></Link>
           <Link to="/instructions"><div className={styles.button}>Instructions</div></Link>
-          {/* <Link to="/credits"><div className={styles.button}>Credits</div></Link> */}
         </div>
       </div>
     </div>
