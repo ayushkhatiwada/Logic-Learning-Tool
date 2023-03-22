@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react"
+import HomeButton from "../components/shared/homeButton/HomeButton"
 import Timer from "../components/shared/timer/Timer"
 import AnswerInput from "../components/game/answerInput/AnswerInput"
 import HeartBar from "../components/game/heartBar/HeartBar"
 import generateQuestion from "../functions/generateQuestion"
 import backgroundStrokes from "../img/background-strokes.svg"
 import styles from "../styles/Game.module.scss"
-import timer from "../components/shared/timer/Timer"
-import gohome from "../img/homesymbol.png"
-import { Link } from 'react-router-dom'
 
 export default function Game() {
   const maxLevels = 5
@@ -189,6 +187,7 @@ export default function Game() {
 
   return (
     <>
+      <HomeButton />
       <div className={styles.container} style={{ backgroundImage: `url(${backgroundStrokes})` }}>
         <div className={styles.gameHeader}>
           <div className={styles.levelTimerQuestion}>
@@ -252,9 +251,6 @@ export default function Game() {
           <HeartBar hearts={hearts} maxHearts={maxHearts} />
         </div>
       </div>
-      <Link to="/" style={{position: "absolute", top : 60, left: 140 }}>
-          <img src={gohome} style={{width: "50px"}}/>
-        </Link>
     </>
   )
 }
