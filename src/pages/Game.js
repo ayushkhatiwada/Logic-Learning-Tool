@@ -66,8 +66,6 @@ export default function Game() {
   }
   
   const submitAnswers = () => {
-    // return nextQuestion()
-
     // check if any answer is empty
     if (answers.includes("")) {
       alert("Please fill in all the answers")
@@ -75,7 +73,6 @@ export default function Game() {
     }
     
     const correctAnswers = getAnswers()
-    // console.log(answers, correctAnswers)
     
     let correctAnswer = true
     for (let i = 0; i < correctAnswers.length; i++) {
@@ -93,14 +90,6 @@ export default function Game() {
       setHearts((hearts) => hearts - 1)
       setTimerPaused(true)
       setWrongAnswerScreen(true)
-      
-      // if (hearts == 0) {
-      //   // game over
-      //   console.log("updateScoreHistory(score, false)")
-      //   updateScoreHistory(score, false)
-      //   alert("Game over!\nFinal score: " + score + "\nPress OK to restart the game.")
-      //   resetGame()
-      // }
     }
   }
 
@@ -216,8 +205,7 @@ export default function Game() {
               </p>
             ))}
           </div>
-
-          {/* <button onClick={() => setTimerPaused((timerPaused) => !timerPaused)}>false</button> */}
+          
           <form
             className={styles.answers}
             onSubmit={(e) => {
